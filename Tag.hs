@@ -58,10 +58,11 @@ instance Show TagKind where
 
 instance Show TagRecord where
     show (TagRecord name file address fields) =
-        name ++ "\t" ++ file ++ "\t" ++ address ++ (makeFieldsStr fields)
+        name ++ "\t" ++ file ++ "\t" ++ address ++ makeFieldsStr fields
         where
         makeFieldsStr [] = ""
-        makeFieldsStr f  = "; \"\t" ++ (concat . intersperse "\t" . map show) f
+        -- makeFieldsStr f  = "; \"\t" ++ (concat . intersperse "\t" . map show) f
+        makeFieldsStr f  = "; \"\t" ++ intercalate "\t" (map show f)
 
 humanReadableKind k = 
     case k of
@@ -136,4 +137,4 @@ getTagKindField t =
 getTagKind t = let (FieldKind k) = getTagKindField t in k
 
 showTag t =
-    (tagRecordName t) ++ " - " ++ (humanReadableField $ getTagKindField t)
+    tagRecordName t ++ " - " ++ humanReadableField (getTagKindField t)

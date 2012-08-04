@@ -16,17 +16,17 @@ tagElemAssoc = [ (TagKindClass,      "Structure")
                , (TagKindUnionName,  "Structure")
                ]
 
-getHighlightClass t m = fmap snd $ (find (\x -> (fst x) == t) m)
+getHighlightClass t m = fmap snd $ find (\x -> fst x == t) m
 
 getFilename = do
     argList <- getArgs
-    if (length argList /= 1)
+    if length argList /= 1
        then ioError $ userError "Usage: tagdeco <tagfile>"
        else return (head argList)
 
 bucketKinds tags = 
     let kinds = map fst tagElemAssoc in
-    filter (not.null) $ [filter ((==k) . getTagKind) tags | k <- kinds]
+    filter (not.null) [filter ((==k) . getTagKind) tags | k <- kinds]
 
 genKeywordList [] = ""
 genKeywordList ts = let keywords  = unwords $ map tagRecordName ts
@@ -52,4 +52,4 @@ main = do
     mapM_ putStrLn keywords
     mapM_ (putStrLn . genHiLine) tagElemAssoc
     where
-    dropComments = dropWhile (\x -> (head x) == '!')
+    dropComments = dropWhile (\x -> head x == '!')
