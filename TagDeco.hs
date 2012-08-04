@@ -1,5 +1,6 @@
 import Data.List
 import Data.List.Split
+import Data.Function
 import System.Environment
 import System.IO
 import System.IO.Error
@@ -37,7 +38,7 @@ genKeywordList ts = let keywords  = unwords $ map tagRecordName ts
                     
 tagStringsToKeywordList tagStrs =
     let tags    = map parseTag tagStrs
-        buckets = bucketKinds tags
+        buckets = map (nubBy ((==) `on` tagRecordName)) (bucketKinds tags)
     in
     map genKeywordList buckets
 
