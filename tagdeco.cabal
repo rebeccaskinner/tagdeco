@@ -1,7 +1,7 @@
 name: tagdeco
 version: 1.0
 synopsis: A utility for generating vim syntax files from ctags fils
-author: Tim Skinner
+author: Rebecca Skinner
 license: BSD3
 license-file: LICENSE
 build-type: Simple
